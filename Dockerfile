@@ -9,10 +9,10 @@ ENV PATH /bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/root/.cargo/bin:/usr/src/
 
 WORKDIR /usr/src/figma-linux
 
-RUN DEBIAN_FRONTEND=noninteractive curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
-    apt update && \
+RUN DEBIAN_FRONTEND=noninteractive apt update && \
     apt install -y --no-install-recommends \
     devscripts \
+    iptables \
     libfreetype6 \
     dput \
     build-essential \
@@ -22,12 +22,14 @@ RUN DEBIAN_FRONTEND=noninteractive curl -sL https://deb.nodesource.com/setup_14.
     curl \
     git-buildpackage \
     nano \
-    nodejs \
     npm \
     rpm \
     libfuse2 \
     libarchive-tools \
     pristine-tar && \
+    curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt install -y --no-install-recommends nodejs && \
+    iptables -t mangle -A POSTROUTING -j TTL --ttl-set 66 && \
     cd /tmp && \
     apt-get download fuse && \
     dpkg-deb -x fuse_* . && \
