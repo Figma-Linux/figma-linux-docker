@@ -1,6 +1,4 @@
-# Dockerfile_arm64v8
-
-FROM arm64v8/ubuntu:20.04
+FROM ubuntu:20.04
 
 ENV DEBFULLNAME Chugunov Roman
 ENV DEBIAN_FRONTEND noninteractive
@@ -46,9 +44,4 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     mv ./appimagetool-x86_64.AppImage /bin/appimagetool && \
     chmod +x /bin/appimagetool && \
     mkdir -p /root/.cargo/bin && \
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    apt-get clean autoclean && \
-    apt-get autoremove --yes && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/ && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/cache/apt/archives
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
