@@ -26,8 +26,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     npm \
     rpm \
     libfuse2 \
+    python \
+    ruby \
+    ruby-dev \
     libarchive-tools \
     pristine-tar && \
+    gem install fpm && \
     curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
     apt install -y --no-install-recommends nodejs && \
     cd /tmp && \
