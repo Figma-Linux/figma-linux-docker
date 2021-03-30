@@ -26,10 +26,10 @@ jobs:
     name: build for arm64v8
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/download-artifact@v2
-      with:
-        name: src
-        path: ./
+      - uses: actions/download-artifact@v2
+        with:
+          name: src
+          path: ./
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
