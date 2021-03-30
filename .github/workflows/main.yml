@@ -18,15 +18,8 @@ jobs:
         id: cache-src
         uses: actions/upload-artifact@v2
         with:
-          name: Dockerfile_arm64v8
-          path: ./Dockerfile_arm64v8
-
-      - name: Cache src
-        id: cache-src
-        uses: actions/upload-artifact@v2
-        with:
-          name: Dockerfile_amd64
-          path: ./Dockerfile_amd64
+          name: src
+          path: ./*
 
   build_arm64v8:
     needs: setup
@@ -35,7 +28,7 @@ jobs:
     steps:
     - uses: actions/download-artifact@v2
       with:
-        name: Dockerfile_arm64v8
+        name: src
         path: ./
 
     - name: Set up Docker Buildx
@@ -64,7 +57,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: Dockerfile_amd64
+          name: src
           path: ./
 
       - name: Build Docker
