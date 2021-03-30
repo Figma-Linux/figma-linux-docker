@@ -1,0 +1,77 @@
+name: Build
+
+on:
+  push: master
+
+jobs:
+  setup:
+    name: Setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Cache src
+        id: cache-src
+        uses: actions/upload-artifact@v2
+        with:
+          name: Dockerfile_arm64v8
+          path: ./Dockerfile_arm64v8
+
+      - name: Cache src
+        id: cache-src
+        uses: actions/upload-artifact@v2
+        with:
+          name: Dockerfile_amd64
+          path: ./Dockerfile_amd64
+
+  build_arm64v8:
+    needs: setup
+    name: build for arm64v8
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: Dockerfile_arm64v8
+        path: ./
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: crazy-max/ghaction-docker-buildx@v3
+      with:
+        buildx-version: latest
+        qemu-version: latest
+
+    - name: Build Docker
+      id: build
+      run: docker buildx build --platform linux/arm64 -t 4tqrgqe5yrgfd/figma-linux-docker-image-arm --load -f ./Dockerfile_arm64v8 .
+
+    - name: Push to Docker Hub
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: 4tqrgqe5yrgfd/figma-linux-docker-image-arm
+        tag_with_ref: true
+
+  build_amd64:
+    runs-on: ubuntu-latest
+    name: build for amd64
+    needs: setup
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: Dockerfile_amd64
+          path: ./
+
+      - name: Build Docker
+        id: build
+        run: docker build -t 4tqrgqe5yrgfd/figma-linux-docker-image -f ./Dockerfile_amd64 .
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: 4tqrgqe5yrgfd/figma-linux-docker-image
