@@ -95,6 +95,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile_amd64
+          file: ./Dockerfile_ppa
           push: true
-          tags: 4tqrgqe5yrgfd/figma-linux-docker-image:latest
+          tags: 4tqrgqe5yrgfd/figma-linux-docker-image-ppa:latest
