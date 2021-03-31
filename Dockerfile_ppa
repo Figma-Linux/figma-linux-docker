@@ -1,0 +1,17 @@
+FROM ubuntu:20.04
+
+ENV DEBFULLNAME Chugunov Roman
+ENV DEBIAN_FRONTEND noninteractive
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV HOME /root
+
+WORKDIR /usr/src/figma-linux
+
+RUN DEBIAN_FRONTEND=noninteractive apt update && \
+    apt install -y --no-install-recommends \
+    devscripts \
+    dput \
+    build-essential \
+    git \
+    curl
