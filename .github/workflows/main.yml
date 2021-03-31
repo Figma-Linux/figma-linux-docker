@@ -14,6 +14,16 @@ jobs:
         id: checkout
         uses: actions/checkout@v2
 
+      - name: Checks
+        run: |
+          whereis gpg
+          whereis dput
+          whereis dpkg
+          whereis dpkg-source
+          whereis debuild
+          whereis tar
+          exit -1
+
       - name: Cache src
         id: cache-src
         uses: actions/upload-artifact@v2
