@@ -17,4 +17,5 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     curl \
     debhelper \
     rsync \
-    ssh
+    ssh \
+    python3-paramiko
