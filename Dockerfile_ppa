@@ -18,5 +18,4 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     debhelper \
     rsync \
     ssh \
-    openssh-server \
-    openssh-clients
+    openssh-server
