@@ -18,4 +18,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     debhelper \
     rsync \
     ssh \
-    python3-paramiko
+    python3-paramiko && \
+    mkdir -p ~/.ssh && \
+    chmod 700 ~/.ssh && \
+    touch ~/.ssh/known_hosts && \
+    ssh-keyscan ppa.launchpad.net >> ~/.ssh/known_hosts && \
+    echo "[ppa-figma]" >> /root/.dput.cf && \
+    echo "fqdn = ppa.launchpad.net" >> /root/.dput.cf && \
+    echo "method = sftp" >> /root/.dput.cf && \
+    echo "incoming = ~chrdevs/ubuntu/figma" >> /root/.dput.cf && \
+    echo "login = chrdevs" >> /root/.dput.cf && \
+    echo "allow_unsigned_uploads = 1" >> /root/.dput.cf && \
+    echo "ssh_config_options = IdentityFile ~/.ssh/id_rsa" >> /root/.dput.cf && \
+    echo "DEBSIGN_MAINT='Chugunov Roman'" >> /etc/devscripts.conf
