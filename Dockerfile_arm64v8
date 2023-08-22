@@ -33,7 +33,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     libarchive-tools \
     pristine-tar && \
     gem install fpm -v 1.10.2 && \
-    curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
     apt install -y --no-install-recommends nodejs && \
     cd /tmp && \
     apt-get download fuse && \
